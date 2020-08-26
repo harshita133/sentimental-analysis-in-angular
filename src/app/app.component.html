@@ -1,0 +1,162 @@
+
+  <div class='container-fluid bg-light'>
+    <div class='row'>
+
+      <div class='col-md-12 body-content'>
+        <br />
+        <h2 style="text-align:center">Sentiment Analysis</h2>
+        <br />
+
+
+
+
+        <div style="margin-left:450px">
+          <span align="justify">
+            <span align="left" style="margin-right:0px"><input #file type="file" class="btn btn-light" multiple (change)="onFileChange($event)" /></span>
+            <input type="search" [(ngModel)]='customerOCN'>
+
+
+            <button type="button" class="btn dark btn-outline btn-success" style="border:2px solid green"
+                    (click)="uploadfile()">
+              Upload
+            </button>
+          </span>
+        </div>
+
+
+        <h4 align="center" *ngIf="distinctArray">Total number of unique customers: {{distinctArray?.length}}</h4>
+        <h4 style="text-align:center" *ngIf="countpos">Total number of comments: {{count}}</h4>
+
+
+
+        <div id="chartdiv" style="height:320px"></div>
+
+
+
+
+
+        <div class="row" style="margin-left:520px" *ngIf="combineArray">
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div class="btn btn-outline-secondary"
+                   (click)="showDiv.start = !showDiv.start;showDiv.current = false;showDiv.next = false;showDiv.previous = false">
+                Raw
+              </div>
+              <div class="btn btn-outline-secondary"
+                   (click)="showDiv.previous = !showDiv.previous;showDiv.current = false;showDiv.next = false;showDiv.start = false">
+                Positive
+              </div>
+              <div class="btn btn-outline-secondary"
+                   (click)="showDiv.current = !showDiv.current;showDiv.previous = false;showDiv.next = false;showDiv.start = false">
+                Neutral
+              </div>
+              <div class="btn btn-outline-secondary" (click)="showDiv.next = !showDiv.next;showDiv.previous = false;showDiv.current = false;showDiv.start = false">
+                Negative
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br />
+
+
+
+        <div *ngIf="showDiv.start" style="width:100%">
+          <table class='table table-dark table-striped' *ngIf="resultantarray" style="width:100%; ">
+            <thead>
+              <tr>
+                <th>Reference Id</th>
+                <th>OCN</th>
+                <th> Analysis</th>
+                <th> Per Comment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let d of resultantarray">
+                <td style="word-wrap: break-word">{{ d.value.RID }}</td>
+                <td style="word-wrap: break-word">{{ d.value.OCN }}</td>
+                <td style="word-wrap: break-word">{{ d.value.COMMENTSLONG.score }}</td>
+                <td style="word-wrap: break-word">{{ d.value.COMMENTSLONG.comparative }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    
+
+        <div *ngIf="showDiv.previous">
+          <div style="width:100%">
+            <table class='table table-dark table-striped' *ngIf="positivearr" style="width:100%; ">
+              <thead>
+                <tr>
+                  <th>Reference Id</th>
+                  <th>OCN</th>
+                  <th> Analysis</th>
+                  <th> Per Comment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let d of positivearr">
+                  <td style="word-wrap: break-word">{{ d.value.RID }}</td>
+                  <td style="word-wrap: break-word">{{ d.value.OCN }}</td>
+                  <td style="word-wrap: break-word">{{ d.value.COMMENTSLONG.score }}</td>
+                  <td style="word-wrap: break-word">{{ d.value.COMMENTSLONG.comparative }}</td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+        <div *ngIf="showDiv.next">
+          <div style="width:100%; ">
+            <table class='table table-dark table-striped' *ngIf="negativearr" style="width:100%; ">
+              <thead>
+                <tr>
+                  <th>Reference Id</th>
+                  <th>OCN</th>
+                  <th> Analysis</th>
+                  <th> Per Comment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let d of negativearr">
+                  <td style="word-wrap: break-word">{{ d.value.RID }}</td>
+                  <td style="word-wrap: break-word">{{ d.value.OCN }}</td>
+                  <td style="word-wrap: break-word">{{ d.value.COMMENTSLONG.score }}</td>
+                  <td style="word-wrap: break-word">{{ d.value.COMMENTSLONG.comparative }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+
+        <div *ngIf="showDiv.current">
+          <div style="width:100%; ">
+            <table class='table table-dark table-striped' *ngIf="neutralarr" style="width:100%;">
+              <thead>
+                <tr>
+                  <th>Reference Id</th>
+                  <th>OCN</th>
+                  <th> Analysis</th>
+                  <th> Per Comment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let d of neutralarr">
+                  <td style="word-wrap: break-word">{{ d.value.RID }}</td>
+                  <td style="word-wrap: break-word">{{ d.value.OCN }}</td>
+                  <td style="word-wrap: break-word">{{ d.value.COMMENTSLONG.score }}</td>
+                  <td style="word-wrap: break-word">{{ d.value.COMMENTSLONG.comparative }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
